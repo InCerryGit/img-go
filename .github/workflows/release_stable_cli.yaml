@@ -21,7 +21,7 @@ jobs:
         - name: Publish .NET app
           env:
               VERSION: ${{ github.ref_name }}
-          run: dotnet publish src/ImgGoCli/ImgGoCli.csproj -c Release --output /home/runner/work/clis/normal
+          run: dotnet publish src/ImgGoCli/ImgGoCli.csproj -c Release -p:PublishSingleFile=true --output /home/runner/work/clis/normal
 
         - name: Package assets
           env:
@@ -59,12 +59,12 @@ jobs:
         - name: Set up .NET Core
           uses: actions/setup-dotnet@v2
           with:
-              dotnet-version: "7.0.100-preview.7.22377.5"
+              dotnet-version: "6.x"
         - name: Publish .NET app
           env:
               RID: ${{ matrix.targets }}
               VERSION: ${{ github.ref_name }}
-          run: dotnet publish src/ImgGoCli/ImgGoCli.csproj -c Release -r $RID -f net7.0 -p:PublishSingleFile=true -p:PublishTrimmed=true -p:DebugType=None -p:DebugSymbols=false -p:EnableCompressionInSingleFile=true --self-contained true --output /home/runner/work/clis/$RID
+          run: dotnet publish src/ImgGoCli/ImgGoCli.csproj -c Release -r $RID -p:PublishSingleFile=true -p:PublishTrimmed=true -p:DebugType=None -p:DebugSymbols=false -p:EnableCompressionInSingleFile=true --self-contained true --output /home/runner/work/clis/$RID
 
         - name: Package assets
           env:
@@ -93,15 +93,15 @@ jobs:
       steps:
         - name: Checkout
           uses: actions/checkout@v1
-        - name: Setup .NET Core SDK 7.0
+        - name: Setup .NET Core SDK
           uses: actions/setup-dotnet@v2
           with:
-            dotnet-version: "7.0.100-preview.7.22377.5"
+            dotnet-version: "6.x"
         - name: Publish .NET app
           env:
               RID: ${{ matrix.targets }}
               VERSION: ${{ github.ref_name }}
-          run: dotnet publish src/ImgGoCli/ImgGoCli.csproj -c Release -r $($env:RID) -f net7.0 -p:PublishAot=true -p:DebugType=None -p:DebugSymbols=false --self-contained true --output ../publish/$($env:RID)
+          run: dotnet publish src/ImgGoCli/ImgGoCli.csproj -c Release -r $($env:RID) -p:UseAot=true -p:PublishAot=true -p:DebugType=None -p:DebugSymbols=false --self-contained true --output ../publish/$($env:RID)
 
         - name: Package assets
           env:
@@ -120,7 +120,7 @@ jobs:
 
     release_cli:
         name: Publish release
-        needs: ['publish_cli','publish_windows_x64_and_arm_aot']
+        needs: ['publish_cli','publish_windows_x64_and_arm_aot','publish_self_contained_cli']
         runs-on: ubuntu-latest
     
         steps:          

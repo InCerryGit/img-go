@@ -2,13 +2,14 @@
 
     <PropertyGroup>
         <OutputType>Exe</OutputType>
-        <TargetFramework>net7.0</TargetFramework>
+        <TargetFramework>net6.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
         <AssemblyName>img-go</AssemblyName>
         <PackAsTool>true</PackAsTool>
         <ToolCommandName>img-go</ToolCommandName>
         <LangVersion>preview</LangVersion>
+        <UseAot>false</UseAot>
     </PropertyGroup>
         
     <PropertyGroup Condition="'$(Configuration)'=='Release'">
@@ -17,7 +18,7 @@
         <IlcGenerateStackTraceData>false</IlcGenerateStackTraceData>
         <TrimUnusedDependencies>true</TrimUnusedDependencies>
         <RootPackageReference>false</RootPackageReference>
-        <TrimMode>full</TrimMode>
+        <TrimMode>link</TrimMode>
         <DebuggerSupport>false</DebuggerSupport>
         <EnableUnsafeBinaryFormatterSerialization>false</EnableUnsafeBinaryFormatterSerialization>
         <EnableUnsafeUTF7Encoding>false</EnableUnsafeUTF7Encoding>
@@ -25,6 +26,10 @@
         <InvariantGlobalization>true</InvariantGlobalization>
         <UseSystemResourceKeys>true</UseSystemResourceKeys>
     </PropertyGroup>
+
+    <ItemGroup Condition="$(UseAot)">
+        <PackageReference Include="Microsoft.DotNet.ILCompiler;runtime.win-x64.Microsoft.DotNet.ILCompiler" Version="$(MicrosoftDotNetILCompilerPackageVersion)" />
+    </ItemGroup>
     
     <ItemGroup>
       <PackageReference Include="Aliyun.OSS.SDK.NetCore" Version="2.13.0" />
