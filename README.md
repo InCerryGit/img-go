@@ -5,7 +5,7 @@
 ## 一、简介
 这个功能是笔者平时用来写文章的工具，使用Markdown编辑插入的图片会默认保存到本地备份，发布到简书、博客园及其他网站时需要将Markdown文件内的图片上传，**非常繁琐**！！ 而这个工具能非常简单的将Markdown文件中的图片**提取、加水印、压缩和上传到指定的图床**，另外也支持对图片文件及文件夹处理。
 
-![image-20220819190954717](doc/README.assets/image-20220819190954717.png)
+![image-20220819190954717](docs/README.assets/image-20220819190954717.png)
 
 ## 二、教程
 ### 安装方式
@@ -23,7 +23,7 @@ dotnet tool install --global img-go
 ### 使用方式
 由于图床的配置很多，所以需要一个小的配置文件帮助我们更容易的使用它。配置文件一般和程序放在同一个目录下，**默认叫`appconfigs.json`**，在没有指定配置文件的情况下，程序会**优先读取同目录的配置文件**，如果**不存在则读取用户目录文件**，用户目录文件在不同平台下都不一样。可以使用`img-go config -c user`命令创建默认的配置文件，**然后手工编辑它**。
 
-![image-20220819204731511](doc/README.assets/image-20220819204731511.png)
+![image-20220819204731511](docs/README.assets/image-20220819204731511.png)
 
 下面是默认的配置文件的详解：
 
@@ -60,46 +60,46 @@ dotnet tool install --global img-go
 ```
 #### 阿里云Oss的配置信息
 
-![image-20220819215531859](doc/README.assets/image-20220819215531859.png)
+![image-20220819215531859](docs/README.assets/image-20220819215531859.png)
 
-![image-20220819215740202](doc/README.assets/image-20220819215740202.png)
+![image-20220819215740202](docs/README.assets/image-20220819215740202.png)
 
 
 #### 帮助信息
 
 无论在什么情况下，`-h`命名就可以显示帮助信息，比如`img-go -h`：
 
-![image-20220819191213009](doc/README.assets/image-20220819191213009.png)
+![image-20220819191213009](docs/README.assets/image-20220819191213009.png)
 
 #### 处理Markdown文件图片
 
 如上图中的`Commands`节点提示一样，处理Markdown文件的命令是`img-go md 文件路径`，如果不会可以`-h`，会弹出各个参数的说明：
 
-![image-20220819191550650](doc/README.assets/image-20220819191550650.png)
+![image-20220819191550650](docs/README.assets/image-20220819191550650.png)
 
 我们有一个叫`fs.md`的Markdown文件，可以使用它来处理。然后我需要添加水印和压缩图片大小，命令使用`img-go md ./fs.md -w -cp `：
 
-![image-20220819192629773](doc/README.assets/image-20220819192629773.png)
+![image-20220819192629773](docs/README.assets/image-20220819192629773.png)
 
-![image-20220819192709332](doc/README.assets/image-20220819192709332.png)
+![image-20220819192709332](docs/README.assets/image-20220819192709332.png)
 
 然后可以看到创建了一个名为`fs-Local.md`文件，打开图片文件夹**格式转换为了jpg**、**大小也有下降**、另外如下图所示打上了水印：
 
-![image-20220819192751465](doc/README.assets/image-20220819192751465.png)
+![image-20220819192751465](docs/README.assets/image-20220819192751465.png)
 
 #### 处理图片
 
 如上面中提到的`Commands`节点提示一样，处理Markdown文件的命令是`img-go img 接文件或目录路径`，如果不会可以`-h`，会弹出各个参数的说明，基本和处理markdown文件一样：
 
-![image-20220819193115109](doc/README.assets/image-20220819193115109.png)
+![image-20220819193115109](docs/README.assets/image-20220819193115109.png)
 
 #### 处理单个图片
 
 我们有一个`demo.png`文件，由于上面的配置文件已经配置了**压缩**和**水印**，所以我们可使用`img-go img ./fs.assets/demo.png`来处理单个图片。
 
-![image-20220819193631427](doc/README.assets/image-20220819193631427.png)
+![image-20220819193631427](docs/README.assets/image-20220819193631427.png)
 
-![image-20220819193733002](doc/README.assets/image-20220819193733002.png)
+![image-20220819193733002](docs/README.assets/image-20220819193733002.png)
 
 #### 处理图片目录
 
@@ -107,15 +107,15 @@ dotnet tool install --global img-go
 
 注意：**它会尝试给文件夹内的所有文件进行压缩和水印操作，失败则跳过，但是同样会上传**。比如下面的**`*.svg`文件并不支持处理**，但是还是会上传到阿里云中。
 
-![image-20220819194143711](doc/README.assets/image-20220819194143711.png)
+![image-20220819194143711](docs/README.assets/image-20220819194143711.png)
 
-![image-20220819194532567](doc/README.assets/image-20220819194532567.png)
+![image-20220819194532567](docs/README.assets/image-20220819194532567.png)
 
 来查看一下阿里云Oss后台：
 
-![image-20220819194412861](doc/README.assets/image-20220819194412861.png)
+![image-20220819194412861](docs/README.assets/image-20220819194412861.png)
 
-![image-20220819194615049](doc/README.assets/image-20220819194615049.png)
+![image-20220819194615049](docs/README.assets/image-20220819194615049.png)
 
 ## 三、其他说明
 
