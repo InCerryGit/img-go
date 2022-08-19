@@ -21,7 +21,7 @@ jobs:
         - name: Publish .NET app
           env:
               VERSION: ${{ github.ref_name }}
-          run: dotnet publish src/ImgGoCli/ImgGoCli.csproj -c Release -p:PublishSingleFile=true --output /home/runner/work/clis/normal
+          run: dotnet publish src/ImgGoCli/ImgGoCli.csproj -c Release --output /home/runner/work/clis/normal
 
         - name: Package assets
           env:
