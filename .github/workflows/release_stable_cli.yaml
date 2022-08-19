@@ -2,6 +2,7 @@ name: Release_CLI_Stable
 
 on:
     push:
+      branches: [ 'feat/**' ]
       tags:
         - "*.*.*"
         - "*.*.*-beta*"
@@ -59,7 +60,7 @@ jobs:
         - name: Set up .NET Core
           uses: actions/setup-dotnet@v2
           with:
-              dotnet-version: "7.0"
+              dotnet-version: "7.0.100-preview.7.22377.5"
         - name: Publish .NET app
           env:
               RID: ${{ matrix.targets }}
@@ -96,7 +97,7 @@ jobs:
         - name: Setup .NET Core SDK 7.0
           uses: actions/setup-dotnet@v2
           with:
-            dotnet-version: "7.0"
+            dotnet-version: "7.0.100-preview.7.22377.5"
         - name: Publish .NET app
           env:
               RID: ${{ matrix.targets }}
