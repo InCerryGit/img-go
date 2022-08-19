@@ -17,7 +17,7 @@ jobs:
         - name: Set up .NET Core
           uses: actions/setup-dotnet@v1
           with:
-              dotnet-version: "6.0.x"
+              dotnet-version: "6.x"
         - name: Publish .NET app
           env:
               VERSION: ${{ github.ref_name }}
@@ -64,7 +64,7 @@ jobs:
           env:
               RID: ${{ matrix.targets }}
               VERSION: ${{ github.ref_name }}
-          run: dotnet publish src/ImgGoCli/ImgGoCli.csproj -c Release -r $RID -p:PublishSingleFile=true -p:PublishTrimmed=true -p:DebugType=None -p:DebugSymbols=false -p:EnableCompressionInSingleFile=true --self-contained true --output /home/runner/work/clis/$RID
+          run: dotnet publish src/ImgGoCli/ImgGoCli.csproj -c Release -r $RID -p:TargetFramework=net7.0 -p:PublishSingleFile=true -p:PublishTrimmed=true -p:DebugType=None -p:DebugSymbols=false -p:EnableCompressionInSingleFile=true --self-contained true --output /home/runner/work/clis/$RID
 
         - name: Package assets
           env:
@@ -93,15 +93,15 @@ jobs:
       steps:
         - name: Checkout
           uses: actions/checkout@v1
-        - name: Setup .NET Core SDK 6.x
+        - name: Setup .NET Core SDK 7.x
           uses: actions/setup-dotnet@v2
           with:
-            dotnet-version: 6.x
+            dotnet-version: 7.x
         - name: Publish .NET app
           env:
               RID: ${{ matrix.targets }}
               VERSION: ${{ github.ref_name }}
-          run: dotnet publish src/ImgGoCli/ImgGoCli.csproj -c Release -r $($env:RID) -p:UseAot=true -p:DebugType=None -p:DebugSymbols=false --self-contained true --output ../publish/$($env:RID)
+          run: dotnet publish src/ImgGoCli/ImgGoCli.csproj -c Release -r $($env:RID) -p:TargetFramework=net7.0 -p:PublishAot=true -p:DebugType=None -p:DebugSymbols=false --self-contained true --output ../publish/$($env:RID)
 
         - name: Package assets
           env:

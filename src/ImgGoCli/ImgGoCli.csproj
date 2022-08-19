@@ -7,11 +7,10 @@
         <Nullable>enable</Nullable>
         <AssemblyName>img-go</AssemblyName>
         <PackAsTool>true</PackAsTool>
-        
         <ToolCommandName>img-go</ToolCommandName>
         <LangVersion>preview</LangVersion>
     </PropertyGroup>
-
+        
     <PropertyGroup Condition="'$(Configuration)'=='Release'">
         <IlcOptimizationPreference>Size</IlcOptimizationPreference>
         <IlcFoldIdenticalMethodBodies>true</IlcFoldIdenticalMethodBodies>
