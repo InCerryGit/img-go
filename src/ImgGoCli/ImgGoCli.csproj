@@ -1,0 +1,43 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <OutputType>Exe</OutputType>
+        <TargetFramework>net6.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <AssemblyName>img-go</AssemblyName>
+        <PackAsTool>true</PackAsTool>
+        
+        <ToolCommandName>img-go</ToolCommandName>
+        <LangVersion>preview</LangVersion>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="'$(Configuration)'=='Release'">
+        <IlcOptimizationPreference>Size</IlcOptimizationPreference>
+        <IlcFoldIdenticalMethodBodies>true</IlcFoldIdenticalMethodBodies>
+        <IlcGenerateStackTraceData>false</IlcGenerateStackTraceData>
+        <TrimUnusedDependencies>true</TrimUnusedDependencies>
+        <RootPackageReference>false</RootPackageReference>
+        <TrimMode>full</TrimMode>
+        <DebuggerSupport>false</DebuggerSupport>
+        <EnableUnsafeBinaryFormatterSerialization>false</EnableUnsafeBinaryFormatterSerialization>
+        <EnableUnsafeUTF7Encoding>false</EnableUnsafeUTF7Encoding>
+        <HttpActivityPropagationSupport>false</HttpActivityPropagationSupport>
+        <InvariantGlobalization>true</InvariantGlobalization>
+        <UseSystemResourceKeys>true</UseSystemResourceKeys>
+    </PropertyGroup>
+    
+    <ItemGroup>
+      <PackageReference Include="Aliyun.OSS.SDK.NetCore" Version="2.13.0" />
+      <PackageReference Include="SixLabors.ImageSharp" Version="2.1.3" />
+      <PackageReference Include="SixLabors.ImageSharp.Drawing" Version="1.0.0-beta15.1" />
+      <PackageReference Include="System.CommandLine" Version="2.0.0-beta4.22272.1" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Update="appconfigs.json">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+    </ItemGroup>
+
+</Project>

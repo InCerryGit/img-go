@@ -1,0 +1,25 @@
+﻿{
+  "AddWatermark": true,
+  "CompressionImage": true,
+  "DefaultBlobStore": "Local",
+  "BlobStores": {
+    "AliyunOss": {
+      "Endpoint": "https://oss-cn-hangzhou.aliyuncs.com",
+      "AccessKey": "AccessKey",
+      "AccessKeySecret": "AccessKeySecret",
+      "BucketName": "BucketName"
+    },
+    "Local": {
+      "DirectoryPath": ".\\imgs"
+    }
+  },
+  "ImageConfigs": {
+    "SkipNotSupportFormat": true,
+    "WatermarkText": "InCerry",
+    "WatermarkFontSize": 30,
+    "WatermarkFont": "Microsoft Yahei",
+    "WatermarkFontColor": "#FFF",
+    "CompressionLevel": "Low",
+    "ConvertFormatTo": "jpg"
+  }
+}
