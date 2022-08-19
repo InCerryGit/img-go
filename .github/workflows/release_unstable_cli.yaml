@@ -1,0 +1,100 @@
+name: Release_CLI_Stable
+
+on:
+    push:
+      tags:
+        - "*.*.*-beta*"
+        - "*.*.*-rc*"
+
+jobs:
+    publish_cli:
+      name: Build and upload cli artifact
+      runs-on: ubuntu-latest    
+      steps:
+        - name: Checkout
+          uses: actions/checkout@v1
+        - name: Set up .NET Core
+          uses: actions/setup-dotnet@v2
+          with:
+              dotnet-version: "6.x"
+        - name: Publish .NET app
+          env:
+              VERSION: ${{ github.ref_name }}
+          run: dotnet publish src/ImgGoCli/ImgGoCli.csproj -c Release --output /home/runner/work/clis/normal
+
+        - name: Package assets
+          env:
+              VERSION: ${{ github.ref_name }}
+          run: |
+              mkdir /home/runner/work/release
+              ls /home/runner/work/clis/
+              zip -j /home/runner/work/release/img-go.$VERSION.zip /home/runner/work/clis/normal/*
+        - name: Upload artifacts
+          uses: actions/upload-artifact@v2
+          with:
+              name: img-go
+              path: /home/runner/work/release
+
+    publish_self_contained_cli:
+      name: Build and upload self contained cli artifact
+      runs-on: ubuntu-latest    
+      strategy:
+          matrix:
+              targets:
+                  [
+                      "linux-x64",
+                      "linux-musl-x64",
+                      "linux-arm",
+                      "linux-arm64",
+                      "osx-x64",
+                      "win-x86",
+                      "win-arm",
+                      "win-x64",
+                      "win-arm64"
+                  ]
+      steps:
+        - name: Checkout
+          uses: actions/checkout@v1
+        - name: Set up .NET Core
+          uses: actions/setup-dotnet@v2
+          with:
+              dotnet-version: "6.x"
+        - name: Publish .NET app
+          env:
+              RID: ${{ matrix.targets }}
+              VERSION: ${{ github.ref_name }}
+          run: dotnet publish src/ImgGoCli/ImgGoCli.csproj -c Release -r $RID -p:PublishSingleFile=true -p:PublishTrimmed=true -p:DebugType=None -p:DebugSymbols=false -p:EnableCompressionInSingleFile=true --self-contained true --output /home/runner/work/clis/$RID
+
+        - name: Package assets
+          env:
+              RID: ${{ matrix.targets }}
+              VERSION: ${{ github.ref_name }}
+          run: |
+              mkdir /home/runner/work/release
+              ls /home/runner/work/clis/
+              zip -j /home/runner/work/release/img-go.$VERSION.$RID.zip /home/runner/work/clis/$RID/*
+        - name: Upload artifacts
+          uses: actions/upload-artifact@v2
+          with:
+              name: img-go
+              path: /home/runner/work/release
+
+    release_cli:
+        name: Publish release
+        needs: ['publish_cli','publish_self_contained_cli']
+        runs-on: ubuntu-latest
+    
+        steps:          
+          - name: Download build artifacts
+            uses: actions/download-artifact@v1
+            with:
+              name: img-go
+          - name: list img-go
+            run: ls img-go    
+          - name: Release
+            uses: softprops/action-gh-release@v1
+            if: startsWith(github.ref, 'refs/tags/')
+            with:
+                prerelease: true
+                files: img-go/**
+                generate_release_notes: true

@@ -6,19 +6,28 @@
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
         <AssemblyName>img-go</AssemblyName>
+        <Authors>InCerry</Authors>
+        <Company>InCerry</Company>
+        <Product>img-go</Product>
         <PackAsTool>true</PackAsTool>
-        
-        <ToolCommandName>img-go</ToolCommandName>
+        <ToolCommandName>$(AssemblyName)</ToolCommandName>
         <LangVersion>preview</LangVersion>
+        <PublishRepositoryUrl>true</PublishRepositoryUrl>
+        <IncludeSymbols>true</IncludeSymbols>
+        <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+        <Description>Markdown图片辅助工具，它能非常简单的将Markdown文件中的图片提取、加水印、压缩并上传到指定的图床。</Description>
+        <Copyright>Apache License 2.0</Copyright>
+        <PackageProjectUrl>https://github.com/InCerryGit/img-go</PackageProjectUrl>
+        <RepositoryUrl>https://github.com/InCerryGit/img-go</RepositoryUrl>
     </PropertyGroup>
-
+        
     <PropertyGroup Condition="'$(Configuration)'=='Release'">
         <IlcOptimizationPreference>Size</IlcOptimizationPreference>
         <IlcFoldIdenticalMethodBodies>true</IlcFoldIdenticalMethodBodies>
         <IlcGenerateStackTraceData>false</IlcGenerateStackTraceData>
         <TrimUnusedDependencies>true</TrimUnusedDependencies>
         <RootPackageReference>false</RootPackageReference>
-        <TrimMode>full</TrimMode>
+        <TrimMode>link</TrimMode>
         <DebuggerSupport>false</DebuggerSupport>
         <EnableUnsafeBinaryFormatterSerialization>false</EnableUnsafeBinaryFormatterSerialization>
         <EnableUnsafeUTF7Encoding>false</EnableUnsafeUTF7Encoding>
@@ -29,8 +38,12 @@
     
     <ItemGroup>
       <PackageReference Include="Aliyun.OSS.SDK.NetCore" Version="2.13.0" />
+      <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1">
+        <PrivateAssets>all</PrivateAssets>
+        <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      </PackageReference>
       <PackageReference Include="SixLabors.ImageSharp" Version="2.1.3" />
-      <PackageReference Include="SixLabors.ImageSharp.Drawing" Version="1.0.0-beta15.1" />
+      <PackageReference Include="SixLabors.ImageSharp.Drawing" Version="1.0.0-beta15" />
       <PackageReference Include="System.CommandLine" Version="2.0.0-beta4.22272.1" />
     </ItemGroup>
 
