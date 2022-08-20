@@ -1,5 +1,6 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using ImgGoCli.Utils;
 using SixLabors.Fonts;
 using SixLabors.ImageSharp;
 
@@ -8,13 +9,17 @@ namespace ImgGoCli.Configs;
 public class AppConfigs
 {
     public const string RawJson = """
+// 如何配置请查看下方仓库文档：
+// Github：https://github.com/InCerryGit/img-go
+// Gitee(国内)：https://gitee.com/InCerryGit/img-go
 {
   "AddWatermark": true,
   "CompressionImage": true,
   "DefaultBlobStore": "Local",
+  "DefaultOutputPath": ".\\output",
   "BlobStores": { 
     "Local": {
-      "DirectoryPath": ".\\imgs"
+        "SubPath":".\\assets"
     },
     "AliyunOss": {
       "Endpoint": "https://oss-cn-hangzhou.aliyuncs.com",
@@ -47,7 +52,9 @@ public class AppConfigs
     public bool AddWatermark { get; set; } = false;
     public bool CompressionImage { get; set; } = false;
     public string? DefaultBlobStore { get; set; }
-    public BlobStoreConfigs BlobStores { get; set; } = null!;
+    
+    public string? DefaultOutputPath { get; set; }
+    public BlobStoreConfigs BlobStores { get; set; } = new();
     public ImageConfigs ImageConfigs { get; set; } = new();
 
     public void Validation()
@@ -63,7 +70,7 @@ public class AppConfigs
             await JsonSerializer.DeserializeAsync<AppConfigs>(json, new ConfigsJsonContext(jsonOptions).AppConfigs);
         if (configs == null) throw new Exception("配置文件错误");
         configs.Validation();
-        Console.WriteLine($"加载配置文件成功，位置：{configsFile.FullName}");
+        LogUtil.Info($"加载配置文件成功，位置：{configsFile.FullName}");
         return configs;
     }
 }

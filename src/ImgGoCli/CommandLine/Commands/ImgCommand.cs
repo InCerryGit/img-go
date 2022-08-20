@@ -34,13 +34,16 @@ public class ImgCommand : Command
     {
         var config = await AppConfigs.LoadConfigsAsync(configsFile);
         config.DefaultBlobStore = store?.ToString() ?? config.DefaultBlobStore;
+        config.DefaultOutputPath = outputPath ?? config.DefaultOutputPath;
+        config.AddWatermark = addWatermark ?? config.AddWatermark;
+        config.CompressionImage = compressionImg ?? config.CompressionImage;
+        
         if (config.DefaultBlobStore is null)
         {
             throw new ArgumentException("请使用-s命令或者修改配置文件[DefaultBlobStore]指定默认图床");
         }
-
-        config.AddWatermark = addWatermark ?? config.AddWatermark;
-        config.CompressionImage = compressionImg ?? config.CompressionImage;
+        
+        LogUtil.Notify($"输出目录为：{config.DefaultOutputPath}");
 
         var blobStoresAccessor = new BlobStoresAccessor(config);
 
@@ -69,7 +72,7 @@ public class ImgCommand : Command
         ProcessImageResult? result = null;
         try
         {
-            Console.WriteLine($"\n图片开始处理：[{Path.GetFileName(imageFile.FullName)}]");
+            LogUtil.Info($"\n图片开始处理：[{Path.GetFileName(imageFile.FullName)}]");
             var (skip, imgStream, fileName) = result = ImgUtil.ProcessImage(
                 config.AddWatermark,
                 config.CompressionImage,
@@ -79,9 +82,7 @@ public class ImgCommand : Command
             
             if (skip)
             {
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("由于文件类型不支持水印、压缩处理，已跳过");
-                Console.ResetColor();
+                LogUtil.Error("由于文件类型不支持水印、压缩处理，已跳过");
             }
             else
             {
@@ -90,8 +91,8 @@ public class ImgCommand : Command
 
             var accessUrl = await blobStoresAccessor.DoStoreAsync(config.DefaultBlobStore!, imgStream, fileName);
             
-            Console.WriteLine($"图片存储成功，存储路径：{accessUrl}");
-            Console.WriteLine($"大小：{imageFile.Length / 1024.0:F}Kb -> {length / 1024.0:F}Kb");
+            LogUtil.Info($"图片存储成功，存储路径：{accessUrl}");
+            LogUtil.Info($"大小：{imageFile.Length / 1024.0:F}Kb -> {length / 1024.0:F}Kb");
             return accessUrl;
         }
         finally

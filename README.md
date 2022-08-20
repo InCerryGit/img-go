@@ -57,11 +57,12 @@ dotnet tool install --global img-go
   "AddWatermark": true,             // 是否添加水印【默认参数，命令行可通过-w覆盖它】
   "CompressionImage": true,         // 是否压缩图片【默认参数，命令行可通过-cp覆盖它】
   "DefaultBlobStore": "Local",      // 对象存储仓库与BlobStores中配置一致，目前支持AliyunOss、Qiniu和Local本地存储【默认参数，命令行可通过-s覆盖它】
+  "DefaultOutputPath": ".\\output", // 默认输出路径 针对Markdown文件处理 和 图片Local存储有效【命令行可通过-o覆盖它】
   // 存储仓库的配置
   "BlobStores": {
     // 本地存储 - 可做测试使用
     "Local": {
-      "DirectoryPath": ".\\imgs"    // 存储路径
+      "SubPath":".\\assets"   // 相对于[DefaultOutputPath]的子目录，比如本配置最终就会存储到目录 .\output\assets\
     },
     // 七牛云
     "Qiniu":{
@@ -74,6 +75,7 @@ dotnet tool install --global img-go
       "AccessUrl":""		   // 你的自定义的域名
     }
     // 下面可以配置其它图床
+    // 配置文件详情见下方
   },
   // 关于图片处理的配置
   "ImageConfigs": {

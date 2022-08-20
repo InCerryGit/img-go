@@ -1,6 +1,7 @@
 ﻿using System.CommandLine;
 using System.Text;
 using ImgGoCli.Configs;
+using ImgGoCli.Utils;
 
 namespace ImgGoCli.CommandLine.Commands;
 
@@ -40,7 +41,7 @@ public class ConfigCommand : Command
                 File.WriteAllText(configPath, AppConfigs.RawJson, Encoding.UTF8);
             }
 
-            Console.WriteLine($"默认配置文件创建成功，路径为：{configPath}");
+            LogUtil.Info($"默认配置文件创建成功，路径为：{configPath}");
         }, createConfigOption);
     }
 }

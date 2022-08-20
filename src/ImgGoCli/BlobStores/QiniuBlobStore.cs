@@ -19,10 +19,10 @@ public class QiniuBlobStore : IBlobStore
         ["na0"] = Zone.ZONE_US_North
     };
 
-    public QiniuBlobStore(BlobStoreConfigs? blobStores)
+    public QiniuBlobStore(AppConfigs? appConfigs)
     {
-        ArgumentNullException.ThrowIfNull(blobStores?.Qiniu);
-        var config = blobStores.Qiniu;
+        ArgumentNullException.ThrowIfNull(appConfigs?.BlobStores.Qiniu);
+        var config = appConfigs.BlobStores.Qiniu;
         var mac = new Mac(config.AccessKey, config.SecretKey);
         var putPolicy = new PutPolicy
         {

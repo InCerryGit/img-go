@@ -1,5 +1,6 @@
 ﻿using System.CommandLine;
 using ImgGoCli.BlobStores;
+using ImgGoCli.Utils;
 
 namespace ImgGoCli.CommandLine;
 
@@ -48,7 +49,9 @@ internal static class CommandOptions
                         return new FileInfo(userConfigPath);
                     }
 
-                    throw new InvalidCastException($"配置文件不存在，请使用{Constants.AppName} config -h命令创建并配置");
+                    LogUtil.Error($"配置文件不存在，请使用[{Constants.AppName} config -h]命令查看帮助、创建并配置");
+
+                    throw new FileNotFoundException(Constants.DefaultConfigFileName);
                 })
             .ExistingOnly();
     }
@@ -57,7 +60,7 @@ internal static class CommandOptions
     {
         return new Option<string?>(
                 aliases: new[] {"--output", "-o"},
-                description: "自定义的输出文件路径，默认为当前文件夹")
+                description: "自定义的输出文件路径，默认使用配置文件[DefaultOutputPath]属性值")
             .LegalFilePathsOnly();
     }
 

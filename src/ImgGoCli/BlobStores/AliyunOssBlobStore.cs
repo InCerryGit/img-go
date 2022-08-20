@@ -10,10 +10,10 @@ public class AliyunOssBlobStore : IBlobStore
     private readonly AliyunOssConfig _config;
     private readonly string _accessUrlPrefix;
 
-    public AliyunOssBlobStore(BlobStoreConfigs? blobStores)
+    public AliyunOssBlobStore(AppConfigs? appConfigs)
     {
-        ArgumentNullException.ThrowIfNull(blobStores?.AliyunOss);
-        _config = blobStores.AliyunOss;
+        ArgumentNullException.ThrowIfNull(appConfigs?.BlobStores.AliyunOss);
+        _config = appConfigs.BlobStores.AliyunOss;
         _accessUrlPrefix = _config.Endpoint.Replace("https://", $"https://{_config.BucketName}.");
         _ossClient = new OssClient(_config.Endpoint, _config.AccessKey, _config.AccessKeySecret);
     }

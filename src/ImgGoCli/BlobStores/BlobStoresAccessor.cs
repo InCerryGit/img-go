@@ -1,4 +1,5 @@
 ﻿using ImgGoCli.Configs;
+using ImgGoCli.Utils;
 
 namespace ImgGoCli.BlobStores;
 
@@ -11,9 +12,9 @@ public class BlobStoresAccessor
         ArgumentNullException.ThrowIfNull(appConfigs);
         _uploaderDic = new Dictionary<string, Lazy<IBlobStore>>
         {
-            [BlobStoresEnum.Local.ToString()] = new(() => new LocalBlobStore(appConfigs.BlobStores)),
-            [BlobStoresEnum.AliyunOss.ToString()] = new(() => new AliyunOssBlobStore(appConfigs.BlobStores)),
-            [BlobStoresEnum.Qiniu.ToString()] = new(() => new QiniuBlobStore(appConfigs.BlobStores))
+            [BlobStoresEnum.Local.ToString()] = new(() => new LocalBlobStore(appConfigs)),
+            [BlobStoresEnum.AliyunOss.ToString()] = new(() => new AliyunOssBlobStore(appConfigs)),
+            [BlobStoresEnum.Qiniu.ToString()] = new(() => new QiniuBlobStore(appConfigs))
         };
     }
 
@@ -35,7 +36,7 @@ public class BlobStoresAccessor
             }
             catch (Exception ex) when (i < 3)
             {
-                Console.WriteLine($"图片存储失败，正在重试{i++ + 1}次，异常原因：{ex.Message}");
+                LogUtil.Info($"图片存储失败，正在重试{i++ + 1}次，异常原因：{ex.Message}");
             }
         }
     }

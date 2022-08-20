@@ -7,9 +7,10 @@ public abstract class BlobStoreConfig
 
 public class BlobStoreConfigs
 {
+    public LocalConfig Local { get; set; } = new();
+    
     public AliyunOssConfig? AliyunOss { get; set; }
 
-    public LocalConfig Local { get; set; } = new();
     public QiniuConfig? Qiniu { get; set; }
 
     public void Validation()
@@ -71,11 +72,11 @@ public class QiniuConfig : BlobStoreConfig
 
 public class LocalConfig : BlobStoreConfig
 {
-    public string DirectoryPath { get; set; } = @".\output";
+    public string SubPath { get; set; } = null!;
 
     public override void Validation()
     {
-        if (string.IsNullOrWhiteSpace(DirectoryPath))
-            throw new Exception("Local:DirectoryPath不合法");
+        if (string.IsNullOrWhiteSpace(SubPath))
+            throw new Exception("Local:SubPath不合法");
     }
 }
