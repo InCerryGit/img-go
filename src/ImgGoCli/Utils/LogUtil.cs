@@ -1,9 +1,18 @@
-﻿using System.Runtime.CompilerServices;
+﻿using System.Diagnostics;
+using System.Runtime.CompilerServices;
 
 namespace ImgGoCli.Utils;
 
 public static class LogUtil
 {
+    [Conditional("DEBUG")]
+    public static void Debug(string msg)
+    {
+        Console.ForegroundColor = ConsoleColor.Gray;
+        Console.WriteLine(msg);
+        Console.ResetColor();
+    }
+
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void Info(string msg)
     {
