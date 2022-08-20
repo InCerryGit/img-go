@@ -15,7 +15,6 @@
         <PublishRepositoryUrl>true</PublishRepositoryUrl>
         <IncludeSymbols>true</IncludeSymbols>
         <SymbolPackageFormat>snupkg</SymbolPackageFormat>
-        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <Description>Markdown图片辅助工具，它能非常简单的将Markdown文件中的图片提取、加水印、压缩并上传到指定的图床。</Description>
         <Copyright>Apache License 2.0</Copyright>
         <PackageProjectUrl>https://github.com/InCerryGit/img-go</PackageProjectUrl>
