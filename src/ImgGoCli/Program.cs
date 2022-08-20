@@ -15,7 +15,9 @@ static class Program
       | | | |\/| | | |_ |______| | |_ | |  | |
      _| |_| |  | | |__| |      | |__| | |__| |
     |_____|_|  |_|\_____|       \_____|\____/
-作者：InCerry 项目GitHub：https://github.com/InCerryGit/img-go";
+   作者：InCerry      帮助文档见下方开源仓库地址
+   Github：https://github.com/InCerryGit/img-go
+   Gitee(国内)：https://gitee.com/InCerryGit/img-go";
     public static async Task<int> Main(string[] args)
     {
         Console.ForegroundColor = ConsoleColor.Cyan;
@@ -23,7 +25,7 @@ static class Program
         Console.ResetColor();
         
         var rootCommand = new RootCommand(
-            "提取Markdown文件内的图片上传到图床，并且生成替换后的Markdown文件。目前支持本地存储、阿里云OSS（大佬们可以自行扩展）\n" +
+            "提取Markdown文件内的图片上传到图床，并且生成替换后的Markdown文件。目前支持本地存储、阿里云OSS、七牛云（大佬们可以自行扩展）\n" +
             "图片水印支持：PNG、JPG、Webp、Gif、Tiff、BMP格式\n" +
             "图片压缩支持：PNG、JPG、Webp、Tiff格式\n")
         {
