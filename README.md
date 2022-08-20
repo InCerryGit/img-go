@@ -2,6 +2,8 @@
 
 [TOC]
 
+**国内镜像地址：https://gitee.com/InCerryGit/img-go**
+
 ## 一、简介
 这个功能是笔者平时用来写文章的工具，使用Markdown编辑插入的图片会默认保存到本地备份，发布到简书、博客园及其他网站时需要将Markdown文件内的图片上传，**非常繁琐**！！ 而这个工具能非常简单的将Markdown文件中的图片**提取、加水印、压缩和上传到指定的图床**，另外也支持对图片文件及文件夹处理。
 
@@ -20,7 +22,9 @@ dotnet tool install --global img-go
 
 #### 下载编译后的程序
 
-下载地址： https://github.com/InCerryGit/img-go/releases
+下载地址：https://github.com/InCerryGit/img-go/releases
+
+某度网盘（国内用户）：https://pan.baidu.com/s/1mX8MEwx_xNnaxvGIHa0L8A?pwd=qzpk
 
 如果您安装了.NET 6 Runtime那么可以下载不带运行时的版本，如下方标记的那个版本，它体积非常小：
 
