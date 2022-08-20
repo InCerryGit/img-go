@@ -3,9 +3,8 @@ name: Release_CLI_Stable
 on:
     push:
       tags:
-        - "*.*.*"
-        - "!*.*.*-beta*"
-        - "!*.*.*-rc*"
+        - "*.*.*-beta*"
+        - "*.*.*-rc*"
 
 jobs:
     publish_cli:
@@ -96,5 +95,6 @@ jobs:
             uses: softprops/action-gh-release@v1
             if: startsWith(github.ref, 'refs/tags/')
             with:
+                prerelease: true
                 files: img-go/**
                 generate_release_notes: true
