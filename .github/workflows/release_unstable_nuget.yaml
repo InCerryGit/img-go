@@ -17,13 +17,19 @@ jobs:
       uses: actions/setup-dotnet@v2
       with:
         dotnet-version: 6.x
+
     - name: Build with dotnet
+      env:
+        VERSION: ${{ github.ref_name }}
       run: |
-        dotnet build --configuration Release --source https://api.nuget.org/v3/index.json img-go.sln      
+        dotnet build --version-suffix $VERSION --configuration Release --source https://api.nuget.org/v3/index.json img-go.sln   
+
     - name: Pack with dotnet
+      env:
+        VERSION: ${{ github.ref_name }}
       run: |
-        ver=alpha`date +%Y%m%d%H%M%S`
-        dotnet pack src/ImgGoCli/ImgGoCli.csproj --version-suffix $ver -o /home/runner/work/nugetpkgs -c Release --no-build
+        dotnet pack src/ImgGoCli/ImgGoCli.csproj --version-suffix $VERSION -o /home/runner/work/nugetpkgs -c Release --no-build
+        
     - name: Upload artifact
       uses: actions/upload-artifact@v1
       with:
