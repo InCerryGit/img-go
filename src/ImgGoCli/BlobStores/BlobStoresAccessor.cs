@@ -4,15 +4,16 @@ namespace ImgGoCli.BlobStores;
 
 public class BlobStoresAccessor
 {
-    private readonly Dictionary<string, IBlobStore> _uploaderDic;
+    private readonly Dictionary<string, Lazy<IBlobStore>> _uploaderDic;
 
     public BlobStoresAccessor(AppConfigs appConfigs)
     {
         ArgumentNullException.ThrowIfNull(appConfigs);
-        _uploaderDic = new Dictionary<string, IBlobStore>
+        _uploaderDic = new Dictionary<string, Lazy<IBlobStore>>
         {
-            [BlobStoresEnum.Local.ToString()] = new LocalBlobStore(appConfigs.BlobStores),
-            [BlobStoresEnum.AliyunOss.ToString()] = new AliyunOssBlobStore(appConfigs.BlobStores)
+            [BlobStoresEnum.Local.ToString()] = new(() => new LocalBlobStore(appConfigs.BlobStores)),
+            [BlobStoresEnum.AliyunOss.ToString()] = new(() => new AliyunOssBlobStore(appConfigs.BlobStores)),
+            [BlobStoresEnum.Qiniu.ToString()] = new(() => new QiniuBlobStore(appConfigs.BlobStores))
         };
     }
 
@@ -30,7 +31,7 @@ public class BlobStoresAccessor
         {
             try
             {
-                return await store.StoreAsync(fileStream, fileName);
+                return await store.Value.StoreAsync(fileStream, fileName);
             }
             catch (Exception ex) when (i < 3)
             {

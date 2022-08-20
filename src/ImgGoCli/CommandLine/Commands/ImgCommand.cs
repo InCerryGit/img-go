@@ -75,6 +75,7 @@ public class ImgCommand : Command
                 config.CompressionImage,
                 config.ImageConfigs,
                 imageFile);
+            var length = imgStream.Length;
             
             if (skip)
             {
@@ -90,7 +91,7 @@ public class ImgCommand : Command
             var accessUrl = await blobStoresAccessor.DoStoreAsync(config.DefaultBlobStore!, imgStream, fileName);
             
             Console.WriteLine($"图片存储成功，存储路径：{accessUrl}");
-            Console.WriteLine($"大小：{imageFile.Length / 1024.0:F}Kb -> {imgStream.Length / 1024.0:F}Kb");
+            Console.WriteLine($"大小：{imageFile.Length / 1024.0:F}Kb -> {length / 1024.0:F}Kb");
             return accessUrl;
         }
         finally
