@@ -17,10 +17,11 @@ public class LocalBlobStore : IBlobStore
 
     public async ValueTask<string> StoreAsync(Stream stream, string fileName)
     {
-        if (_appConfigs.DefaultOutputPath.IsNullOrWhiteSpace())
-            throw new Exception("输出路径为空，请使用-o指定路径或修改配置文件[DefaultOutputPath]属性");
-
-        var directoryPath = Path.Combine(_appConfigs.DefaultOutputPath, _config.SubPath);
+        var directoryPath = Path.Combine(_appConfigs.DefaultOutputPath.IsNullOrWhiteSpace()
+                ? Directory.GetCurrentDirectory()
+                : _appConfigs.DefaultOutputPath,
+            _config.SubPath);
+        
         if (Directory.Exists(directoryPath) == false)
         {
             Directory.CreateDirectory(directoryPath);
@@ -29,7 +30,7 @@ public class LocalBlobStore : IBlobStore
         var filePath = Path.Combine(directoryPath, fileName);
         await using var fileStream = File.OpenWrite(filePath);
         await stream.CopyToAsync(fileStream);
-        
+
         // return access path
         return Path.Combine(_config.SubPath, fileName);
     }

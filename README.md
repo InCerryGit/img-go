@@ -84,8 +84,8 @@ dotnet tool install --global img-go
     "WatermarkFontSize": 30,              // 水印文字大小，如果图片小于文字大小，那么会缩放
     "WatermarkFont": "Microsoft Yahei",   // 使用的字体类型，默认使用微软雅黑，Mac和Linux用户可自行配置系统安装的字体
     "WatermarkFontColor": "#FFF",         // 字体颜色
-    "CompressionLevel": "Low",            // 压缩级别
-    "ConvertFormatTo": "jpg"              //  是否转换格式，支持一些常见的图片格式，如果不想转换，填null即可 如："ConvertFormatTo": null
+    "CompressionLevel": "Low",            // 压缩级别，级别越高大小越小，质量就越低，级别从低到高为：Low Medium High
+    "ConvertFormatTo": "jpg"              // 是否转换格式，支持一些常见的图片格式，如果不想转换，填null即可 如："ConvertFormatTo": null
   }
 }
 ```
@@ -102,7 +102,7 @@ Json配置项和说明：
   "Bucket":"Bucket",       // 你设置的Bucket
   "AccessKey":"AccessKey", // 你的AccessKey
   "SecretKey":"SecretKey", // 你的SecretKey
-  "AccessUrl":"AccessUrl"		   // 你的自定义的域名，需要注意是http还是https访问
+  "AccessUrl":"AccessUrl"  // 你的自定义的域名，需要注意是http还是https访问
 }
 ```
 
