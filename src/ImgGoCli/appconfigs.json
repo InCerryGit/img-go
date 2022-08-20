@@ -1,7 +1,7 @@
 ﻿{
   "AddWatermark": true,
   "CompressionImage": true,
-  "DefaultBlobStore": "Qiniu",
+  "DefaultBlobStore": "Local",
   "BlobStores": {
     "Local": {
       "DirectoryPath": ".\\imgs"
