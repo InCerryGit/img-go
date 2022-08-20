@@ -103,7 +103,7 @@ jobs:
           env:
               RID: ${{ matrix.targets }}
               VERSION: ${{ github.ref_name }}
-          run: dotnet publish src/ImgGoCli/ImgGoCli.csproj -c Release -r $($env:RID) -p:UseAot=true -p:PublishAot=true -p:DebugType=None -p:DebugSymbols=false --self-contained true --output ../publish/$($env:RID)
+          run: dotnet publish src/ImgGoCli/ImgGoCli.csproj -c Release -r $($env:RID) -p:UseAot=true -p:DebugType=None -p:DebugSymbols=false --self-contained true --output ../publish/$($env:RID)
 
         - name: Package assets
           env:
