@@ -10,5 +10,10 @@ public enum BlobStoresEnum
     /// <summary>
     /// 阿里云Oss
     /// </summary>
-    AliyunOss = 2
+    AliyunOss = 2,
+    
+    /// <summary>
+    /// 七牛云Kodo
+    /// </summary>
+    Qiniu = 3
 }

@@ -12,7 +12,9 @@ internal static class CommandOptions
             aliases: new[] {"--store", "-s"},
             description: @"设置图床，默认使用配置文件值")
         {
-            ArgumentHelpName = $"{padLeft}Local: 本地存储{padLeft}AliyunOss: 阿里云对象存储{padLeft}"
+            ArgumentHelpName = $"{padLeft}Local: 本地存储{padLeft}" +
+                               $"AliyunOss: 阿里云对象存储{padLeft}" +
+                               $"Qiniu: 七牛云kodo存储{padLeft}"
         };
         return option;
     }

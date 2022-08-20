@@ -7,6 +7,15 @@
 ## 一、简介
 这个功能是笔者平时用来写文章的工具，使用Markdown编辑插入的图片会默认保存到本地备份，发布到简书、博客园及其他网站时需要将Markdown文件内的图片上传，**非常繁琐**！！ 而这个工具能非常简单的将Markdown文件中的图片**提取、加水印、压缩和上传到指定的图床**，另外也支持对图片文件及文件夹处理。
 
+目前支持以下图床：
+
+| 对象存储       | 控制台及配置名称  |
+|------------|-----------|
+| 本地存储       | Local     |
+| 阿里云 OSS存储  | AliyunOss |
+| 七牛云 Kodo存储 | Qiniu     |
+
+
 ![image-20220819190954717](docs/README.assets/image-20220819190954717.png)
 
 ## 二、教程
@@ -35,6 +44,8 @@ dotnet tool install --global img-go
 ![image-20220820131749686](docs/README.assets/image-20220820131749686.png)
 
 ### 使用方式
+#### 配置
+
 由于图床的配置很多，所以需要一个小的配置文件帮助我们更容易的使用它。配置文件一般和程序放在同一个目录下，**默认叫`appconfigs.json`**，在没有指定配置文件的情况下，程序会**优先读取同目录的配置文件**，如果**不存在则读取用户目录文件**，用户目录文件在不同平台下都不一样。可以使用`img-go config -c user`命令创建默认的配置文件，**然后手工编辑它**。
 
 ![image-20220819204731511](docs/README.assets/image-20220819204731511.png)
@@ -45,20 +56,24 @@ dotnet tool install --global img-go
 {
   "AddWatermark": true,             // 是否添加水印【默认参数，命令行可通过-w覆盖它】
   "CompressionImage": true,         // 是否压缩图片【默认参数，命令行可通过-cp覆盖它】
-  "DefaultBlobStore": "Local",      // 对象存储仓库与BlobStores中配置一致，目前支持AliyunOss和Local本地存储【默认参数，命令行可通过-s覆盖它】
+  "DefaultBlobStore": "Local",      // 对象存储仓库与BlobStores中配置一致，目前支持AliyunOss、Qiniu和Local本地存储【默认参数，命令行可通过-s覆盖它】
   // 存储仓库的配置
   "BlobStores": {
-    // 阿里云Oss图床
-    "AliyunOss": {
-      "Endpoint": "https://oss-cn-hangzhou.aliyuncs.com",   // 阿里云Oss区域URL，我这里设置的是杭州区域
-      "AccessKey": "AccessKey",                             // 你的AccessKey
-      "AccessKeySecret": "AccessKeySecret",                 // 你的AccessKeySecret
-      "BucketName": "BucketName"                            // 你的BucketName
-    },
     // 本地存储 - 可做测试使用
     "Local": {
       "DirectoryPath": ".\\imgs"    // 存储路径
+    },
+    // 七牛云
+    "Qiniu":{
+      "Zone":"z2",             // 存储区域 https://developer.qiniu.com/kodo/1671/region-endpoint-fq
+      "UseHttps":false,        // 是否使用https
+      "UseCdnDomains":false,   // 是否使用CDN加速
+      "Bucket":"Bucket",       // 你设置的Bucket
+      "AccessKey":"AccessKey", // 你的AccessKey
+      "SecretKey":"SecretKey", // 你的SecretKey
+      "AccessUrl":""		   // 你的自定义的域名
     }
+    // 下面可以配置其它图床
   },
   // 关于图片处理的配置
   "ImageConfigs": {
@@ -72,7 +87,44 @@ dotnet tool install --global img-go
   }
 }
 ```
-#### 阿里云Oss的配置信息
+##### 七牛云配置信息
+
+Json配置项和说明：
+
+```json5
+// 七牛云
+"Qiniu":{
+  "Zone":"z2",             // 存储区域 完整的存储区域看这里 https://developer.qiniu.com/kodo/1671/region-endpoint-fq
+  "UseHttps":false,        // 是否使用https
+  "UseCdnDomains":false,   // 是否使用CDN加速
+  "Bucket":"Bucket",       // 你设置的Bucket
+  "AccessKey":"AccessKey", // 你的AccessKey
+  "SecretKey":"SecretKey", // 你的SecretKey
+  "AccessUrl":"AccessUrl"		   // 你的自定义的域名，需要注意是http还是https访问
+}
+```
+
+对应的密钥信息需要到七牛自己的[控制台](https://portal.qiniu.com/user/key)里找到。其中需要注意的是，自己的存储空间的区域需要确定：
+
+![image-20220820165725811](docs/README.assets/image-20220820165725811.png)
+
+![image-20220820165826357](docs/README.assets/image-20220820165826357.png)
+
+##### 阿里云Oss的配置信息
+
+Json配置项和说明：
+
+```json5
+// 阿里云Oss图床
+"AliyunOss": {
+  "Endpoint": "https://oss-cn-hangzhou.aliyuncs.com",   // 阿里云Oss区域URL，我这里设置的是杭州区域
+  "AccessKey": "AccessKey",                             // 你的AccessKey
+  "AccessKeySecret": "AccessKeySecret",                 // 你的AccessKeySecret
+  "BucketName": "BucketName"                            // 你的BucketName
+}
+```
+
+在控制台中寻找配置项。
 
 ![image-20220819215531859](docs/README.assets/image-20220819215531859.png)
 

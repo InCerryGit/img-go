@@ -1,4 +1,5 @@
 ﻿using ImgGoCli.Configs;
+using ImgGoCli.Extensions;
 
 namespace ImgGoCli.Utils;
 
@@ -12,7 +13,7 @@ public static class ImgUtil
     {
         var imgStream = imgFile.OpenRead();
         var fileName = Path.GetFileName(imgFile.FullName);
-        if (addWatermark == false && compressImg == false && imageConfig.ConvertFormatTo is not null)
+        if (addWatermark == false && compressImg == false && imageConfig.ConvertFormatTo.NotNullOrEmpty())
             return new ProcessImageResult(false, imgStream,  fileName);
 
         try

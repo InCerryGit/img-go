@@ -12,15 +12,24 @@ public class AppConfigs
   "AddWatermark": true,
   "CompressionImage": true,
   "DefaultBlobStore": "Local",
-  "BlobStores": {
+  "BlobStores": { 
+    "Local": {
+      "DirectoryPath": ".\\imgs"
+    },
     "AliyunOss": {
       "Endpoint": "https://oss-cn-hangzhou.aliyuncs.com",
       "AccessKey": "AccessKey",
       "AccessKeySecret": "AccessKeySecret",
       "BucketName": "BucketName"
-    },
-    "Local": {
-      "DirectoryPath": ".\\imgs"
+    }, 
+    "Qiniu":{
+      "Zone":"z2",
+      "UseHttps":false,
+      "UseCdnDomains":false,
+      "Bucket":"Bucket",
+      "AccessKey":"AccessKey",
+      "SecretKey":"SecretKey",
+      "AccessUrl":"AccessUrl"
     }
   },
   "ImageConfigs": {
