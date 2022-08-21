@@ -13,6 +13,7 @@ public class LocalBlobStore : IBlobStore
         ArgumentNullException.ThrowIfNull(appConfigs?.BlobStores.Local);
         _appConfigs = appConfigs;
         _config = appConfigs.BlobStores.Local;
+        _config.Validation();
     }
 
     public async ValueTask<string> StoreAsync(Stream stream, string fileName)

@@ -21,25 +21,25 @@ public class AppConfigs
     },
     "AliyunOss": {
       "Endpoint": "https://oss-cn-hangzhou.aliyuncs.com",
-      "AccessKey": "AccessKey",
-      "AccessKeySecret": "AccessKeySecret",
-      "BucketName": "BucketName"
+      "AccessKey": "",
+      "AccessKeySecret": "",
+      "BucketName": ""
     }, 
     "Qiniu":{
       "Zone":"z2",
       "UseHttps":false,
       "UseCdnDomains":false,
-      "Bucket":"Bucket",
-      "AccessKey":"AccessKey",
-      "SecretKey":"SecretKey",
-      "AccessUrl":"AccessUrl"
+      "Bucket":"",
+      "AccessKey":"",
+      "SecretKey":"",
+      "AccessUrl":""
     },
     "Tencent":{ 
       "Region":"ap-nanjing",
-      "AppId":"AppId",
-      "SecretId":"SceretId",
-      "SecretKey":"SecretKey",
-      "Bucket":"Bucket"
+      "AppId":"",
+      "SecretId":"",
+      "SecretKey":"",
+      "Bucket":""
     }
   },
   "ImageConfigs": {
@@ -49,7 +49,7 @@ public class AppConfigs
     "WatermarkFont": "Microsoft Yahei",
     "WatermarkFontColor": "#FFF",
     "CompressionLevel": "Low",
-    "ConvertFormatTo": "jpg"
+    "ConvertFormatTo": null
   }
 }
 """;
@@ -62,9 +62,12 @@ public class AppConfigs
     public BlobStoreConfigs BlobStores { get; set; } = new();
     public ImageConfigs ImageConfigs { get; set; } = new();
 
-    public void Validation()
+    public void BasicConfigValidation()
     {
-        BlobStores.Validation();
+        if (DefaultBlobStore is null)
+        {
+            throw new ArgumentException("请使用-s命令或者修改配置文件[DefaultBlobStore]指定默认图床");
+        }
     }
 
     internal static async ValueTask<AppConfigs> LoadConfigsAsync(FileInfo configsFile)
@@ -74,7 +77,6 @@ public class AppConfigs
         var configs =
             await JsonSerializer.DeserializeAsync<AppConfigs>(json, new ConfigsJsonContext(jsonOptions).AppConfigs);
         if (configs == null) throw new Exception("配置文件错误");
-        configs.Validation();
         LogUtil.Info($"加载配置文件成功，位置：{configsFile.FullName}");
         return configs;
     }

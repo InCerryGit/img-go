@@ -15,6 +15,7 @@ public class TencentBlobStore : IBlobStore
     public TencentBlobStore(AppConfigs? configs)
     {
         _config = Guard.ArgumentNotNull(configs?.BlobStores.Tencent);
+        _config.Validation();
         var cred = new DefaultQCloudCredentialProvider(_config.SecretId, _config.SecretKey, 3600);
         var cosConfig = new CosXmlConfig.Builder()
             .SetAppid(_config.AppId)

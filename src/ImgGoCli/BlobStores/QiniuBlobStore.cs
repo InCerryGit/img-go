@@ -23,6 +23,7 @@ public class QiniuBlobStore : IBlobStore
     {
         ArgumentNullException.ThrowIfNull(appConfigs?.BlobStores.Qiniu);
         var config = appConfigs.BlobStores.Qiniu;
+        config.Validation();
         var mac = new Mac(config.AccessKey, config.SecretKey);
         var putPolicy = new PutPolicy
         {

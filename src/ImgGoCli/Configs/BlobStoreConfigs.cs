@@ -14,14 +14,6 @@ public class BlobStoreConfigs
     public QiniuConfig? Qiniu { get; set; }
 
     public TencentConfig? Tencent { get; set; }
-
-    public void Validation()
-    {
-        AliyunOss?.Validation();
-        Qiniu?.Validation();
-        Tencent?.Validation();
-        Local.Validation();
-    }
 }
 
 public class AliyunOssConfig : BlobStoreConfig
@@ -34,11 +26,11 @@ public class AliyunOssConfig : BlobStoreConfig
     public override void Validation()
     {
         if (string.IsNullOrWhiteSpace(AccessKey))
-            throw new Exception("AliyunOss:AccessKey不合法");
+            throw new Exception("配置文件BlobStores:AliyunOss:AccessKey属性不能为空");
         if (string.IsNullOrWhiteSpace(AccessKeySecret))
-            throw new Exception("AliyunOss:AccessKeySecret不合法");
+            throw new Exception("配置文件BlobStores:AliyunOss:AccessKeySecret属性不能为空");
         if (string.IsNullOrWhiteSpace(BucketName))
-            throw new Exception("AliyunOss:BucketName不合法");
+            throw new Exception("配置文件BlobStores:AliyunOss:BucketName属性不能为空");
     }
 }
 
@@ -61,15 +53,15 @@ public class QiniuConfig : BlobStoreConfig
     public override void Validation()
     {
         if (string.IsNullOrWhiteSpace(Zone))
-            throw new Exception("Qiniu:Zone不合法");
+            throw new Exception("配置文件BlobStores:Qiniu:Zone属性不能为空");
         if (string.IsNullOrWhiteSpace(Bucket))
-            throw new Exception("Qiniu:Bucket不合法");
+            throw new Exception("配置文件BlobStores:Qiniu:Bucket属性不能为空");
         if (string.IsNullOrWhiteSpace(AccessKey))
-            throw new Exception("Qiniu:AccessKey不合法");
+            throw new Exception("配置文件BlobStores:Qiniu:AccessKey属性不能为空");
         if (string.IsNullOrWhiteSpace(AccessUrl))
-            throw new Exception("Qiniu:AccessUrl不合法");
+            throw new Exception("配置文件BlobStores:Qiniu:AccessUrl属性不能为空");
         if (string.IsNullOrWhiteSpace(SecretKey))
-            throw new Exception("Qiniu:SecretKey不合法");
+            throw new Exception("配置文件BlobStores:Qiniu:SecretKey属性不能为空");
     }
 }
 
@@ -86,15 +78,15 @@ public class TencentConfig : BlobStoreConfig
     public override void Validation()
     {
         if (string.IsNullOrWhiteSpace(Region))
-            throw new Exception("Tencent:Region不合法");
+            throw new Exception("配置文件BlobStores:Tencent:Region属性不能为空");
         if (string.IsNullOrWhiteSpace(AppId))
-            throw new Exception("Tencent:AppId不合法");
+            throw new Exception("配置文件BlobStores:Tencent:AppId属性不能为空");
         if (string.IsNullOrWhiteSpace(SecretId))
-            throw new Exception("Tencent:SecretId不合法");
+            throw new Exception("配置文件BlobStores:Tencent:SecretId属性不能为空");
         if (string.IsNullOrWhiteSpace(SecretKey))
-            throw new Exception("Tencent:SecretKey不合法");
+            throw new Exception("配置文件BlobStores:Tencent:SecretKey属性不能为空");
         if (string.IsNullOrWhiteSpace(Bucket))
-            throw new Exception("Tencent:Bucket不合法");
+            throw new Exception("配置文件BlobStores:Tencent:Bucket属性不能为空");
     }
 }
 
@@ -105,6 +97,6 @@ public class LocalConfig : BlobStoreConfig
     public override void Validation()
     {
         if (string.IsNullOrWhiteSpace(SubPath))
-            throw new Exception("Local:SubPath不合法");
+            throw new Exception("配置文件BlobStores:Local:SubPath属性不能为空");
     }
 }

@@ -14,6 +14,7 @@ public class AliyunOssBlobStore : IBlobStore
     {
         ArgumentNullException.ThrowIfNull(appConfigs?.BlobStores.AliyunOss);
         _config = appConfigs.BlobStores.AliyunOss;
+        _config.Validation();
         _accessUrlPrefix = _config.Endpoint.Replace("https://", $"https://{_config.BucketName}.");
         _ossClient = new OssClient(_config.Endpoint, _config.AccessKey, _config.AccessKeySecret);
     }

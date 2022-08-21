@@ -19,21 +19,22 @@ public class BlobStoresAccessor
         };
     }
 
-    public async ValueTask<string> DoStoreAsync(string blobStore, Stream fileStream, string fileName)
+    public async ValueTask<string> DoStoreAsync(string blobStoreName, Stream fileStream, string fileName)
     {
-        if (_uploaderDic.TryGetValue(blobStore, out var store) == false)
+        if (_uploaderDic.TryGetValue(blobStoreName, out var store) == false)
         {
-            throw new ArgumentException($"目标对象存储错误，没有找到[{blobStore}]");
+            throw new ArgumentException($"目标对象存储错误，没有找到[{blobStoreName}]");
         }
 
         fileStream.Seek(0, SeekOrigin.Begin);
 
+        var blobStore = store.Value;
         var i = 0;
         while (true)
         {
             try
             {
-                return await store.Value.StoreAsync(fileStream, fileName);
+                return await blobStore.StoreAsync(fileStream, fileName);
             }
             catch (Exception ex) when (i < 3)
             {

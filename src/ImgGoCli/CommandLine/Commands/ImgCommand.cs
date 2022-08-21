@@ -37,11 +37,7 @@ public class ImgCommand : Command
         config.DefaultOutputPath = outputPath ?? config.DefaultOutputPath;
         config.AddWatermark = addWatermark ?? config.AddWatermark;
         config.CompressionImage = compressionImg ?? config.CompressionImage;
-        
-        if (config.DefaultBlobStore is null)
-        {
-            throw new ArgumentException("请使用-s命令或者修改配置文件[DefaultBlobStore]指定默认图床");
-        }
+        config.BasicConfigValidation();
         
         LogUtil.Notify($"输出目录为：{config.DefaultOutputPath}");
 
