@@ -14,6 +14,7 @@ public class ImgCommand : Command
         var outputPathOption = CommandOptions.OutPutPathOption();
         var watermarkOption = CommandOptions.WatermarkOption();
         var compressLevelOption = CommandOptions.CompressLevelOption();
+        var skipFileWhenExceptionOption = CommandOptions.SkipFileWhenException();
         var filePathArgument = CommandArguments.FileSystemInfoArgument();
         AddOption(storeOption);
         AddOption(configFileOption);
@@ -22,7 +23,7 @@ public class ImgCommand : Command
         AddOption(compressLevelOption);
         AddArgument(filePathArgument);
         this.SetHandler(CommandHandler, storeOption, configFileOption, filePathArgument, outputPathOption,
-            watermarkOption, compressLevelOption);
+            watermarkOption, compressLevelOption,skipFileWhenExceptionOption);
     }
 
     internal static async Task CommandHandler(BlobStoresEnum? store,
@@ -30,16 +31,18 @@ public class ImgCommand : Command
         FileSystemInfo imageDirectoryOrFile,
         string? outputPath,
         bool? addWatermark,
-        bool? compressionImg)
+        bool? compressionImg,
+        bool? skipFileWhenException)
     {
         var config = await AppConfigs.LoadConfigsAsync(configsFile);
         config.DefaultBlobStore = store?.ToString() ?? config.DefaultBlobStore;
         config.DefaultOutputPath = outputPath ?? config.DefaultOutputPath;
         config.AddWatermark = addWatermark ?? config.AddWatermark;
         config.CompressionImage = compressionImg ?? config.CompressionImage;
+        config.SkipFileWhenException = skipFileWhenException ?? config.SkipFileWhenException;
         config.BasicConfigValidation();
         
-        LogUtil.Notify($"输出目录为：{config.DefaultOutputPath}");
+        LogUtil.Notify(config.ToString());
 
         var blobStoresAccessor = new BlobStoresAccessor(config);
 
@@ -52,7 +55,14 @@ public class ImgCommand : Command
             {
                 foreach (var fileInfo in directoryInfo.GetFiles())
                 {
-                    await ImageFileHandler(fileInfo, config, blobStoresAccessor);
+                    try
+                    {
+                        await ImageFileHandler(fileInfo, config, blobStoresAccessor);
+                    }
+                    catch (Exception ex) when(config.SkipFileWhenException)
+                    {
+                        LogUtil.Error($"跳过文件[{fileInfo.Name}]，异常原因：处理失败-{ex.Message}");
+                    }
                 }
 
                 break;

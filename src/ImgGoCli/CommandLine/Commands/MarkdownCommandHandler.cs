@@ -16,15 +16,17 @@ internal class MarkdownCommand : Command
         var outputPathOption = CommandOptions.OutPutPathOption();
         var watermarkOption = CommandOptions.WatermarkOption();
         var compressLevel = CommandOptions.CompressLevelOption();
+        var skipProcessFailFile = CommandOptions.SkipFileWhenException();
         var markdownFilePathArgument = CommandArguments.FilePathArgument();
         AddOption(storeOption);
         AddOption(configFileOption);
         AddOption(outputPathOption);
         AddOption(watermarkOption);
         AddOption(compressLevel);
+        AddOption(skipProcessFailFile);
         AddArgument(markdownFilePathArgument);
         this.SetHandler(CommandHandler, storeOption, markdownFilePathArgument, configFileOption, outputPathOption,
-            watermarkOption, compressLevel);
+            watermarkOption, compressLevel, skipProcessFailFile);
     }
 
 
@@ -33,16 +35,18 @@ internal class MarkdownCommand : Command
         FileInfo configsFile,
         string? outputPath,
         bool? addWatermark,
-        bool? compressionImg)
+        bool? compressionImg,
+        bool? skipProcessFailFile)
     {
         var config = await AppConfigs.LoadConfigsAsync(configsFile);
         config.DefaultBlobStore = store?.ToString() ?? config.DefaultBlobStore;
         config.DefaultOutputPath = outputPath ?? config.DefaultOutputPath;
         config.AddWatermark = addWatermark ?? config.AddWatermark;
         config.CompressionImage = compressionImg ?? config.CompressionImage;
+        config.SkipFileWhenException = skipProcessFailFile ?? config.SkipFileWhenException;
         config.BasicConfigValidation();
         
-        LogUtil.Notify($"输出目录为：{config.DefaultOutputPath}");
+        LogUtil.Notify(config.ToString());
 
         var blobStoresAccessor = new BlobStoresAccessor(config);
         var fileDir = markdownFile.DirectoryName;
@@ -62,14 +66,21 @@ internal class MarkdownCommand : Command
                 continue;
             }
 
-            var imgPhyPath = HttpUtility.UrlDecode(Path.Combine(fileDir!, img));
-            if (File.Exists(imgPhyPath) == false)
+            try
             {
-                throw new FileNotFoundException($"请检查Markdown图片路径是否正确，文件不存在：{imgPhyPath}");
-            }
+                var imgPhyPath = HttpUtility.UrlDecode(Path.Combine(fileDir!, img));
+                if (File.Exists(imgPhyPath) == false)
+                {
+                    throw new FileNotFoundException($"请检查Markdown图片路径是否正确，文件不存在：{imgPhyPath}");
+                }
 
-            var imgFile = new FileInfo(imgPhyPath);
-            imgPathDic[img] = await ImgCommand.ImageFileHandler(imgFile, config, blobStoresAccessor);
+                var imgFile = new FileInfo(imgPhyPath);
+                imgPathDic[img] = await ImgCommand.ImageFileHandler(imgFile, config, blobStoresAccessor);
+            }
+            catch (Exception ex) when(config.SkipFileWhenException)
+            {
+                LogUtil.Error($"跳过图片[{img}]，异常原因：处理失败-{ex.Message}");
+            }
         }
 
         //替换

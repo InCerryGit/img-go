@@ -81,4 +81,15 @@ internal static class CommandOptions
             description: "启用图片压缩，压缩级别在配置文件[ImageConfigs:CompressionLevel]中定义"
         );
     }
+    
+    internal static Option<bool?> SkipFileWhenException()
+    {
+        return new Option<bool?>(
+            aliases: new[] {"--skip-exception-file", "-sf"},
+            description: "是否跳过处理异常的文件，默认使用配置文件[SkipFileWhenException]属性值"
+        )
+        {
+            ArgumentHelpName = "true：跳过该文件，继续处理其它文件 false：抛出异常，终止处理"
+        };
+    }
 }

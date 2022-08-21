@@ -18,7 +18,7 @@ public class ConfigCommand : Command
         )
         {
             ArgumentHelpName = $"{pad}默认: 在用户目录创建配置文件{pad}" +
-                               $"p: 程序根目录创建配置文件{pad} " +
+                               $"p: 程序根目录创建配置文件{pad}" +
                                $"c: 在当前命令行工作目录创建配置文件{pad}",
             Arity = ArgumentArity.ZeroOrOne
         };

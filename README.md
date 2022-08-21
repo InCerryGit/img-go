@@ -59,6 +59,7 @@ dotnet tool install --global img-go
   "CompressionImage": true,         // 是否压缩图片【默认参数，命令行可通过-cp覆盖它】
   "DefaultBlobStore": "Local",      // 对象存储仓库与BlobStores中配置一致，目前支持AliyunOss、Qiniu和Local本地存储【默认参数，命令行可通过-s覆盖它】
   "DefaultOutputPath": ".\\output", // 默认输出路径 针对Markdown文件处理 和 图片Local存储有效【命令行可通过-o覆盖它】
+  "SkipFileWhenException": false,   // 是否跳过处理异常的文件 true：跳过该文件，继续处理其它文件 false：抛出异常，终止处理 【命令行可通过-sf覆盖它】
   // 存储仓库的配置
   "BlobStores": {
     // 本地存储 - 可做测试使用

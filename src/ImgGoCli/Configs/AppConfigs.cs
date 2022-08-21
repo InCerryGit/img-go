@@ -15,6 +15,7 @@ public class AppConfigs
   "CompressionImage": true,
   "DefaultBlobStore": "Local",
   "DefaultOutputPath": ".\\output",
+  "SkipFileWhenException": false,
   "BlobStores": { 
     "Local": {
         "SubPath":".\\assets"
@@ -57,8 +58,8 @@ public class AppConfigs
     public bool AddWatermark { get; set; } = false;
     public bool CompressionImage { get; set; } = false;
     public string? DefaultBlobStore { get; set; }
-    
     public string? DefaultOutputPath { get; set; }
+    public bool SkipFileWhenException { get; set; } = false;
     public BlobStoreConfigs BlobStores { get; set; } = new();
     public ImageConfigs ImageConfigs { get; set; } = new();
 
@@ -68,6 +69,12 @@ public class AppConfigs
         {
             throw new ArgumentException("请使用-s命令或者修改配置文件[DefaultBlobStore]指定默认图床");
         }
+    }
+
+    public override string ToString()
+    {
+        return $"输出地址：{DefaultOutputPath ?? "未配置"}，对象存储：{DefaultBlobStore}，添加水印：{AddWatermark}，" +
+               $"压缩图片：{CompressionImage}，跳过处理异常文件：{SkipFileWhenException}";
     }
 
     internal static async ValueTask<AppConfigs> LoadConfigsAsync(FileInfo configsFile)
