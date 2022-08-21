@@ -25,7 +25,7 @@ static class Program
         Console.ResetColor();
         
         var rootCommand = new RootCommand(
-            "提取Markdown文件内的图片上传到图床，并且生成替换后的Markdown文件。目前支持本地存储、阿里云OSS、七牛云（大佬们可以自行扩展）\n" +
+            "提取Markdown文件内的图片上传到图床，并且生成替换后的Markdown文件。目前支持阿里云、七牛云、腾讯云等等（大佬们可以自行扩展）\n" +
             "图片水印支持：PNG、JPG、Webp、Gif、Tiff、BMP格式\n" +
             "图片压缩支持：PNG、JPG、Webp、Tiff格式\n")
         {
