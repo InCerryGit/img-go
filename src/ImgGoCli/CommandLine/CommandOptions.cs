@@ -1,5 +1,6 @@
 ﻿using System.CommandLine;
 using ImgGoCli.BlobStores;
+using ImgGoCli.Shared;
 using ImgGoCli.Utils;
 
 namespace ImgGoCli.CommandLine;
@@ -8,14 +9,15 @@ internal static class CommandOptions
 {
     internal static Option<BlobStoresEnum?> StoreOption()
     {
-        const string padLeft = "\n\t\t";
+        const string pad = "\n\t\t";
         var option = new Option<BlobStoresEnum?>(
             aliases: new[] {"--store", "-s"},
             description: @"设置图床，默认使用配置文件值")
         {
-            ArgumentHelpName = $"{padLeft}Local: 本地存储{padLeft}" +
-                               $"AliyunOss: 阿里云对象存储{padLeft}" +
-                               $"Qiniu: 七牛云kodo存储{padLeft}"
+            ArgumentHelpName = $"{pad}Local: 本地存储{pad}" +
+                               $"AliyunOss: 阿里云Oss存储{pad}" +
+                               $"Qiniu: 七牛云kodo存储{pad}" +
+                               $"Tencent: 腾讯云Cos存储{pad}"
         };
         return option;
     }

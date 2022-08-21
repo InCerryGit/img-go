@@ -14,7 +14,8 @@ public class BlobStoresAccessor
         {
             [BlobStoresEnum.Local.ToString()] = new(() => new LocalBlobStore(appConfigs)),
             [BlobStoresEnum.AliyunOss.ToString()] = new(() => new AliyunOssBlobStore(appConfigs)),
-            [BlobStoresEnum.Qiniu.ToString()] = new(() => new QiniuBlobStore(appConfigs))
+            [BlobStoresEnum.Qiniu.ToString()] = new(() => new QiniuBlobStore(appConfigs)),
+            [BlobStoresEnum.Tencent.ToString()] = new(() => new TencentBlobStore(appConfigs))
         };
     }
 
@@ -36,7 +37,7 @@ public class BlobStoresAccessor
             }
             catch (Exception ex) when (i < 3)
             {
-                LogUtil.Info($"图片存储失败，正在重试{i++ + 1}次，异常原因：{ex.Message}");
+                LogUtil.Info($"图片存储失败，正在重试第{i++ + 1}次，异常原因：{ex.Message}");
             }
         }
     }

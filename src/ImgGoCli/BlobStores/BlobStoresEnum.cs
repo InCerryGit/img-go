@@ -15,5 +15,10 @@ public enum BlobStoresEnum
     /// <summary>
     /// 七牛云Kodo
     /// </summary>
-    Qiniu = 3
+    Qiniu = 3,
+    
+    /// <summary>
+    /// 腾讯云 Cos
+    /// </summary>
+    Tencent = 4
 }

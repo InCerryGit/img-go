@@ -8,15 +8,18 @@ public abstract class BlobStoreConfig
 public class BlobStoreConfigs
 {
     public LocalConfig Local { get; set; } = new();
-    
+
     public AliyunOssConfig? AliyunOss { get; set; }
 
     public QiniuConfig? Qiniu { get; set; }
+
+    public TencentConfig? Tencent { get; set; }
 
     public void Validation()
     {
         AliyunOss?.Validation();
         Qiniu?.Validation();
+        Tencent?.Validation();
         Local.Validation();
     }
 }
@@ -67,6 +70,31 @@ public class QiniuConfig : BlobStoreConfig
             throw new Exception("Qiniu:AccessUrl不合法");
         if (string.IsNullOrWhiteSpace(SecretKey))
             throw new Exception("Qiniu:SecretKey不合法");
+    }
+}
+
+public class TencentConfig : BlobStoreConfig
+{
+    public string Region { get; set; } = null!;
+    public string AppId { get; set; } = null!;
+    public string SecretId { get; set; } = null!;
+
+    public string SecretKey { get; set; } = null!;
+
+    public string Bucket { get; set; } = null!;
+
+    public override void Validation()
+    {
+        if (string.IsNullOrWhiteSpace(Region))
+            throw new Exception("Tencent:Region不合法");
+        if (string.IsNullOrWhiteSpace(AppId))
+            throw new Exception("Tencent:AppId不合法");
+        if (string.IsNullOrWhiteSpace(SecretId))
+            throw new Exception("Tencent:SecretId不合法");
+        if (string.IsNullOrWhiteSpace(SecretKey))
+            throw new Exception("Tencent:SecretKey不合法");
+        if (string.IsNullOrWhiteSpace(Bucket))
+            throw new Exception("Tencent:Bucket不合法");
     }
 }
 
