@@ -1,4 +1,4 @@
-﻿namespace ImgGoCli;
+﻿namespace ImgGoCli.Shared;
 
 public static class Constants
 {

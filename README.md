@@ -9,11 +9,12 @@
 
 目前支持以下图床：
 
-| 对象存储       | 控制台及配置名称  | img-go支持版本 |
-|------------|-----------|------------|
-| 本地存储       | Local     | 1.0.0      |
-| 阿里云 OSS存储  | AliyunOss | 1.0.0      |
-| 七牛云 Kodo存储 | Qiniu     | 1.0.1      |
+| 对象存储        | 控制台及配置名称 | img-go支持版本 |
+| --------------- | ---------------- | -------------- |
+| 本地存储        | Local            | 1.0.0          |
+| 阿里云 OSS存储  | AliyunOss        | 1.0.0          |
+| 七牛云 Kodo存储 | Qiniu            | 1.0.1          |
+| 腾讯云 Cos存储  | Tencent          | 1.0.1          |
 
 
 ![image-20220819190954717](docs/README.assets/image-20220819190954717.png)
@@ -132,12 +133,33 @@ Json配置项和说明：
 
 ![image-20220819215740202](docs/README.assets/image-20220819215740202.png)
 
+#### 腾讯云Cos配置信息
+
+```json5
+"Tencent":{ 
+  "Region":"ap-nanjing",		// 所在区域简称，详情见 https://cloud.tencent.com/document/product/436/6224
+  "AppId":"AppId",				// 你的AppId
+  "SecretId":"SceretId",		// 你的SceretId
+  "SecretKey":"SecretKey",		// 你的SecretKey
+  "Bucket":"Bucket"				// 你的Bucket名称
+}
+```
+
+在控制台中寻找配置项，存储桶的信息：https://console.cloud.tencent.com/cos/bucket
+
+![image-20220821102805855](docs/README.assets/image-20220821102805855.png)
+
+SecretId相关的信息：https://console.cloud.tencent.com/cam/capi
+
+![image-20220821102859792](docs/README.assets/image-20220821102859792.png)
 
 #### 帮助信息
 
 无论在什么情况下，`-h`命名就可以显示帮助信息，比如`img-go -h`：
 
 ![image-20220819191213009](docs/README.assets/image-20220819191213009.png)
+
+
 
 #### 处理Markdown文件图片
 

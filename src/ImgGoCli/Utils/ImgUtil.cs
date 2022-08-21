@@ -1,5 +1,6 @@
 ﻿using ImgGoCli.Configs;
 using ImgGoCli.Extensions;
+using ImgGoCli.Shared;
 
 namespace ImgGoCli.Utils;
 

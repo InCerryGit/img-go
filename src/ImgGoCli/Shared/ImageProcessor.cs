@@ -11,7 +11,7 @@ using SixLabors.ImageSharp.Formats.Tiff;
 using SixLabors.ImageSharp.Formats.Webp;
 using SixLabors.ImageSharp.Processing;
 
-namespace ImgGoCli;
+namespace ImgGoCli.Shared;
 
 public class ImageProcessor : IDisposable
 {

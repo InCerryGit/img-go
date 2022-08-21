@@ -46,6 +46,7 @@
       <PackageReference Include="SixLabors.ImageSharp" Version="2.1.3" />
       <PackageReference Include="SixLabors.ImageSharp.Drawing" Version="1.0.0-beta15" />
       <PackageReference Include="System.CommandLine" Version="2.0.0-beta4.22272.1" />
+      <PackageReference Include="Tencent.QCloud.Cos.Sdk" Version="5.4.32" />
     </ItemGroup>
 
 </Project>

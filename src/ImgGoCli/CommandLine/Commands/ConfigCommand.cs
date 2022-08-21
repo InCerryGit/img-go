@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.Text;
 using ImgGoCli.Configs;
+using ImgGoCli.Shared;
 using ImgGoCli.Utils;
 
 namespace ImgGoCli.CommandLine.Commands;
@@ -10,15 +11,15 @@ public class ConfigCommand : Command
 {
     public ConfigCommand() : base("config", "配置文件的相关处理")
     {
-        const string padLeft = "\n\t\t";
+        const string pad = "\n\t\t";
         var createConfigOption = new Option<string?>(
             aliases: new[] {"-c", "-create"},
             description: "创建配置文件"
         )
         {
-            ArgumentHelpName = $"{padLeft}默认: 在用户目录创建配置文件{padLeft}" +
-                               $"p: 程序根目录创建配置文件{padLeft} " +
-                               $"c: 在当前命令行工作目录创建配置文件{padLeft}",
+            ArgumentHelpName = $"{pad}默认: 在用户目录创建配置文件{pad}" +
+                               $"p: 程序根目录创建配置文件{pad} " +
+                               $"c: 在当前命令行工作目录创建配置文件{pad}",
             Arity = ArgumentArity.ZeroOrOne
         };
         AddOption(createConfigOption);
