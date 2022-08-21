@@ -134,7 +134,7 @@ Json配置项和说明：
 
 ![image-20220819215740202](docs/README.assets/image-20220819215740202.png)
 
-#### 腾讯云Cos配置信息
+##### 腾讯云Cos配置信息
 
 ```json5
 "Tencent":{ 
