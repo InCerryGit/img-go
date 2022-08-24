@@ -89,7 +89,6 @@ public class AppConfigs
     }
 }
 
-
 [JsonSourceGenerationOptions(
     PropertyNamingPolicy = JsonKnownNamingPolicy.CamelCase,
     // We only need metadata mode because we only do deserialization.
