@@ -15,7 +15,8 @@ public class BlobStoresAccessor
             [BlobStoresEnum.Local.ToString()] = new(() => new LocalBlobStore(appConfigs)),
             [BlobStoresEnum.AliyunOss.ToString()] = new(() => new AliyunOssBlobStore(appConfigs)),
             [BlobStoresEnum.Qiniu.ToString()] = new(() => new QiniuBlobStore(appConfigs)),
-            [BlobStoresEnum.Tencent.ToString()] = new(() => new TencentBlobStore(appConfigs))
+            [BlobStoresEnum.Tencent.ToString()] = new(() => new TencentBlobStore(appConfigs)),
+            [BlobStoresEnum.Embed.ToString()] = new(() => new EmbedBlobStore())
         };
     }
 

@@ -23,7 +23,7 @@ public class ImgCommand : Command
         AddOption(compressLevelOption);
         AddArgument(filePathArgument);
         this.SetHandler(CommandHandler, storeOption, configFileOption, filePathArgument, outputPathOption,
-            watermarkOption, compressLevelOption,skipFileWhenExceptionOption);
+            watermarkOption, compressLevelOption, skipFileWhenExceptionOption);
     }
 
     internal static async Task CommandHandler(BlobStoresEnum? store,
@@ -41,7 +41,7 @@ public class ImgCommand : Command
         config.CompressionImage = compressionImg ?? config.CompressionImage;
         config.SkipFileWhenException = skipFileWhenException ?? config.SkipFileWhenException;
         config.BasicConfigValidation();
-        
+
         LogUtil.Notify(config.ToString());
 
         var blobStoresAccessor = new BlobStoresAccessor(config);
@@ -59,7 +59,7 @@ public class ImgCommand : Command
                     {
                         await ImageFileHandler(fileInfo, config, blobStoresAccessor);
                     }
-                    catch (Exception ex) when(config.SkipFileWhenException)
+                    catch (Exception ex) when (config.SkipFileWhenException)
                     {
                         LogUtil.Error($"跳过文件[{fileInfo.Name}]，异常原因：处理失败-{ex.Message}");
                     }
@@ -85,7 +85,7 @@ public class ImgCommand : Command
                 config.ImageConfigs,
                 imageFile);
             var length = imgStream.Length;
-            
+
             if (skip)
             {
                 LogUtil.Error("由于文件类型不支持水印、压缩处理，已跳过");
@@ -96,8 +96,14 @@ public class ImgCommand : Command
             }
 
             var accessUrl = await blobStoresAccessor.DoStoreAsync(config.DefaultBlobStore!, imgStream, fileName);
-            
-            LogUtil.Info($"图片存储成功，存储路径：{accessUrl}");
+
+            var displayUrl = accessUrl;
+            if (displayUrl.Length > 256)
+            {
+                displayUrl = $"路径太长，已省略中间部分 - {displayUrl.AsSpan()[..128]} ... {displayUrl.AsSpan()[^128..]}";
+            }
+
+            LogUtil.Info($"图片存储成功，存储路径：{displayUrl}");
             LogUtil.Info($"大小：{imageFile.Length / 1024.0:F}Kb -> {length / 1024.0:F}Kb");
             return accessUrl;
         }
