@@ -1,4 +1,5 @@
 ﻿using System.Net;
+using System.Web;
 using Aliyun.OSS;
 using ImgGoCli.Configs;
 
@@ -29,6 +30,6 @@ public class AliyunOssBlobStore : IBlobStore
 
     private string GetAccessUrl(string fileName)
     {
-        return $"{_accessUrlPrefix}/{fileName}";
+        return $"{_accessUrlPrefix}/{HttpUtility.UrlEncode(fileName)}";
     }
 }

@@ -1,4 +1,5 @@
-﻿using ImgGoCli.Configs;
+﻿using System.Web;
+using ImgGoCli.Configs;
 using Qiniu.Storage;
 using Qiniu.Util;
 
@@ -65,6 +66,6 @@ public class QiniuBlobStore : IBlobStore
 
     private string GetAccessUrl(string fileName)
     {
-        return $"{_accessUrlPrefix}/{fileName}";
+        return $"{_accessUrlPrefix}/{HttpUtility.UrlEncode(fileName)}";
     }
 }
