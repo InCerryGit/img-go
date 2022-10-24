@@ -1,5 +1,4 @@
-﻿using System.Web;
-using ImgGoCli.Configs;
+﻿using ImgGoCli.Configs;
 using ImgGoCli.Utils;
 
 namespace ImgGoCli.BlobStores;
@@ -36,13 +35,7 @@ public class BlobStoresAccessor
         {
             try
             {
-                var accessUri = await blobStore.StoreAsync(fileStream, fileName);
-                if (accessUri.StartsWith("http"))
-                {
-                    accessUri = HttpUtility.UrlEncode(accessUri);
-                }
-
-                return accessUri;
+                return await blobStore.StoreAsync(fileStream, fileName);
             }
             catch (Exception ex) when (i < 3)
             {
