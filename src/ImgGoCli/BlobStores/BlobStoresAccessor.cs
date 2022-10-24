@@ -1,4 +1,5 @@
-﻿using ImgGoCli.Configs;
+﻿using System.Web;
+using ImgGoCli.Configs;
 using ImgGoCli.Utils;
 
 namespace ImgGoCli.BlobStores;
@@ -15,7 +16,8 @@ public class BlobStoresAccessor
             [BlobStoresEnum.Local.ToString()] = new(() => new LocalBlobStore(appConfigs)),
             [BlobStoresEnum.AliyunOss.ToString()] = new(() => new AliyunOssBlobStore(appConfigs)),
             [BlobStoresEnum.Qiniu.ToString()] = new(() => new QiniuBlobStore(appConfigs)),
-            [BlobStoresEnum.Tencent.ToString()] = new(() => new TencentBlobStore(appConfigs))
+            [BlobStoresEnum.Tencent.ToString()] = new(() => new TencentBlobStore(appConfigs)),
+            [BlobStoresEnum.Embed.ToString()] = new(() => new EmbedBlobStore())
         };
     }
 
@@ -34,7 +36,13 @@ public class BlobStoresAccessor
         {
             try
             {
-                return await blobStore.StoreAsync(fileStream, fileName);
+                var accessUri = await blobStore.StoreAsync(fileStream, fileName);
+                if (accessUri.StartsWith("http"))
+                {
+                    accessUri = HttpUtility.UrlEncode(accessUri);
+                }
+
+                return accessUri;
             }
             catch (Exception ex) when (i < 3)
             {

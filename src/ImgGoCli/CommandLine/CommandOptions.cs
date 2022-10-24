@@ -15,6 +15,7 @@ internal static class CommandOptions
             description: @"设置图床，默认使用配置文件值")
         {
             ArgumentHelpName = $"{pad}Local: 本地存储{pad}" +
+                               $"Embed: 使用Base64方式将图片嵌入Markdown文件中{pad}" +
                                $"AliyunOss: 阿里云Oss存储{pad}" +
                                $"Qiniu: 七牛云kodo存储{pad}" +
                                $"Tencent: 腾讯云Cos存储{pad}"

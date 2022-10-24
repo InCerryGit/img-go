@@ -20,5 +20,10 @@ public enum BlobStoresEnum
     /// <summary>
     /// 腾讯云 Cos
     /// </summary>
-    Tencent = 4
+    Tencent = 4,
+    
+    /// <summary>
+    /// 使用Base64将图片嵌入文档
+    /// </summary>
+    Embed = 5 
 }
