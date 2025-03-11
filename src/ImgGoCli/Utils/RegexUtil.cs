@@ -4,7 +4,7 @@ namespace ImgGoCli.Utils;
 
 public static class RegexUtil
 {
-    private static readonly Regex ImgRegex = new(@"!\[.*?\]\((.*?)\)", RegexOptions.Compiled);
+    private static readonly Regex ImgRegex = new(@"!\[[^\]]*\]\((?!http)([^)]+)\)", RegexOptions.Compiled);
 
     public static IEnumerable<string> ExtractorImgFromMarkdown(string content)
     {
