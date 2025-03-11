@@ -17,7 +17,7 @@ jobs:
         - name: Set up .NET Core
           uses: actions/setup-dotnet@v2
           with:
-              dotnet-version: "6.x"
+              dotnet-version: "9.x"
         - name: Publish .NET app
           env:
               VERSION: ${{ github.ref_name }}
@@ -59,7 +59,7 @@ jobs:
         - name: Set up .NET Core
           uses: actions/setup-dotnet@v2
           with:
-              dotnet-version: "6.x"
+              dotnet-version: "9.x"
         - name: Publish .NET app
           env:
               RID: ${{ matrix.targets }}
