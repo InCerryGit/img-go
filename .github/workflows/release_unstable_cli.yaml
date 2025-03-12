@@ -47,8 +47,8 @@ jobs:
                       "linux-arm",
                       "linux-arm64",
                       "osx-x64",
+                      "osx-arm64",
                       "win-x86",
-                      "win-arm",
                       "win-x64",
                       "win-arm64"
                   ]
@@ -86,9 +86,10 @@ jobs:
     
         steps:          
           - name: Download build artifacts
-            uses: actions/upload-artifact@v4.6.1
+            uses: actions/download-artifact@v4.1.9
             with:
               name: img-go
+              path: img-go
           - name: list img-go
             run: ls img-go    
           - name: Release
