@@ -13,9 +13,9 @@ jobs:
       runs-on: ubuntu-latest    
       steps:
         - name: Checkout
-          uses: actions/checkout@v1
+          uses: actions/checkout@v4
         - name: Set up .NET Core
-          uses: actions/setup-dotnet@v2
+          uses: actions/setup-dotnet@v4
           with:
               dotnet-version: "9.x"
         - name: Publish .NET app
@@ -31,7 +31,7 @@ jobs:
               ls /home/runner/work/clis/
               zip -j /home/runner/work/release/img-go.$VERSION.zip /home/runner/work/clis/normal/*
         - name: Upload artifacts
-          uses: actions/upload-artifact@v2
+          uses: actions/upload-artifact@v4
           with:
               name: img-go
               path: /home/runner/work/release
@@ -55,9 +55,9 @@ jobs:
                   ]
       steps:
         - name: Checkout
-          uses: actions/checkout@v1
+          uses: actions/checkout@v4
         - name: Set up .NET Core
-          uses: actions/setup-dotnet@v2
+          uses: actions/setup-dotnet@v4
           with:
               dotnet-version: "9.x"
         - name: Publish .NET app
@@ -75,7 +75,7 @@ jobs:
               ls /home/runner/work/clis/
               zip -j /home/runner/work/release/img-go.$VERSION.$RID.zip /home/runner/work/clis/$RID/*
         - name: Upload artifacts
-          uses: actions/upload-artifact@v2
+          uses: actions/upload-artifact@v4.6.1
           with:
               name: img-go
               path: /home/runner/work/release
@@ -87,7 +87,7 @@ jobs:
     
         steps:          
           - name: Download build artifacts
-            uses: actions/download-artifact@v1
+            uses: actions/download-artifact@v4.1.9
             with:
               name: img-go
           - name: list img-go
